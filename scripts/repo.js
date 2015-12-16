@@ -4,7 +4,7 @@ repos.all = [];
 
 repos.requestRepos = function(callback) {
   $.ajax({
-    url: '/github/users/brookr/repos' +
+    url: '/github/users/pnwlady/repos' +
           '?per_page=100' +
           '&sort=updated',
     type: 'GET',
