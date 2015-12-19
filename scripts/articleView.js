@@ -29,3 +29,33 @@ articleView.render = function(article) {
 
   return articleView.template(article);
 };
+
+articleView.renderGroup = function (articleList) {
+  $('#blog')
+    .hide()
+    .empty()
+    .append(
+      articleList.map(function(a) {
+        return articleView.render(a);
+      })
+    )
+    .fadeIn()
+    .siblings().hide();
+}
+
+articleView.loadTemplate = function(articles) {
+  $.get('/template/article.html', function(data, msg, xhr) {
+    //data is what comes back from AJAX call - storing handlebars function until it's called
+    articleView.template = Handlebars.compile(data);
+    articleView.authorPopluate();
+    articleView.categoryPopulate();
+    articleView.handleFilter();
+    articleView.renderGroup(articles);
+    articleView.truncateArticles();
+  });
+}
+
+articleView.show = function(articles) {
+  //we just instantiated the artilces array into the new Article we can remove code
+  articleView.loadTemplate(articles);
+};

@@ -91,6 +91,26 @@ Article.find = function(id, callback) {
   );
 };
 
+
+Article.findByCategory = function(category, callback) {
+  //get array and pass to callback
+  webDB.execute (
+    [
+      {
+        sql: 'SELECT * FROM articles WHERE category = ?',
+        //this is coming from the URL/user watch out!!!  we must escape it!
+        data: [category]
+      }
+    ],
+    //calls back row data - instantiate articles or pass an array of instantiated articles use anon function?
+    function(rows) {
+      var articles = rows.map(function(row) {
+      return new Article(row);
+      });
+      callback(articles);
+    };
+  )};
+
 Article.truncateTable = function(callback) {
   // Delete all records from given table.
   webDB.execute('DELETE FROM articles;',

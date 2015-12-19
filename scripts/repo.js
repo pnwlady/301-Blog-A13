@@ -13,3 +13,28 @@ repos.requestRepos = function(callback) {
     }
   }).done(callback);
 };
+
+//looking at Natalie's code
+//repo
+var ghRepo = {};
+
+ghRepo.requestAll = function(callback) {
+  $.ajax({
+    type: 'GET',
+    url: '/github/user/repos?sort=updated'
+  }).done(callback);
+};
+
+//activity
+var ghActivity = {};
+
+ghActivity.request = function(callback) {
+  $.ajax({
+    type: 'GET',
+    url: '/github/users/pnwlady/events'
+  }).done(callback);
+};
+
+ghActivity.extractBranch = function(ref) {
+  return ref.split('/')[ref.split('/').length - 1];
+};
